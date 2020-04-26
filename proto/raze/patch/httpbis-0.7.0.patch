@@ -1,0 +1,24 @@
+From c607218f0898c9323244bbe991918d196f440887 Mon Sep 17 00:00:00 2001
+From: Colin Merkel <colin353@gmail.com>
+Date: Sun, 26 Apr 2020 09:11:15 -0400
+Subject: [PATCH] nodelay
+
+---
+ src/client/client_conn.rs | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/client/client_conn.rs b/src/client/client_conn.rs
+index d7293fe..85f4f67 100644
+--- a/src/client/client_conn.rs
++++ b/src/client/client_conn.rs
+@@ -300,6 +300,7 @@ impl ClientConn {
+ 
+         let connect = addr.connect(&lh)
+             .map(move |c| { info!("connected to {}", addr); c })
++            .map(|c| { c.set_nodelay(true).expect("failed to set TCP_NODELAY"); c })
+             .map_err(|e| e.into());
+ 
+         let tls_conn = connect.and_then(move |conn| {
+-- 
+2.17.1
+

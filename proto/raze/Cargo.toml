@@ -36,6 +36,10 @@ additional_flags = [
 patches = ["@io_bazel_rules_rust//proto/raze/patch:protobuf-2.8.2.patch"]
 patch_args = ["-p1"]
 
+[raze.crates.httpbis.'0.7.0']
+patches = ["@io_bazel_rules_rust//proto/raze/patch:httpbis-0.7.0.patch"]
+patch_args = ["-p1"]
+
 [raze.crates.protobuf-codegen.'2.8.2']
 extra_aliased_targets = ["cargo_bin_protoc_gen_rust"]
 
