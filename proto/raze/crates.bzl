@@ -3,19 +3,19 @@ cargo-raze crate workspace functions
 
 DO NOT EDIT! Replaced on runs of cargo-raze
 """
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
 
 def _new_http_archive(name, **kwargs):
     if not native.existing_rule(name):
-        http_archive(name=name, **kwargs)
+        http_archive(name = name, **kwargs)
 
 def _new_git_repository(name, **kwargs):
     if not native.existing_rule(name):
-        new_git_repository(name=name, **kwargs)
+        new_git_repository(name = name, **kwargs)
 
 def raze_fetch_remote_crates():
-
     _new_http_archive(
         name = "raze__autocfg__1_0_0",
         url = "https://crates-io.s3-us-west-1.amazonaws.com/crates/autocfg/autocfg-1.0.0.crate",
@@ -193,6 +193,12 @@ def raze_fetch_remote_crates():
         type = "tar.gz",
         strip_prefix = "httpbis-0.7.0",
         sha256 = "7689cfa896b2a71da4f16206af167542b75d242b6906313e53857972a92d5614",
+        patches = [
+            "@io_bazel_rules_rust//proto/raze/patch:httpbis-0.7.0.patch",
+        ],
+        patch_args = [
+            "-p1",
+        ],
         build_file = Label("//proto/raze/remote:httpbis-0.7.0.BUILD"),
     )
 
@@ -696,4 +702,3 @@ def raze_fetch_remote_crates():
         sha256 = "d59cefebd0c892fa2dd6de581e937301d8552cb44489cdff035c6187cb63fa5e",
         build_file = Label("//proto/raze/remote:ws2_32-sys-0.2.1.BUILD"),
     )
-
